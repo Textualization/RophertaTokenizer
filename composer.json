@@ -1,0 +1,31 @@
+{
+    "name": "textualization/ropherta-tokenizer",
+    "description": "GPT3Tokenizer (BPE) with Roberta-base vocabulary.",
+    "type": "library",
+    "license": "Apache License 2.0",
+    "autoload": {
+        "psr-4": {
+            "Textualization\\Ropherta\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Textualization\\Ropherta\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit -d memory_limit=-1 tests"
+    },
+    "authors": [
+        {
+            "name": "Pablo Duboue",
+            "email": "pablo.duboue@gmail.com"
+        }
+    ],
+    "require": {
+        "gioni06/gpt3-tokenizer": "v1.2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.8"
+    }
+}
