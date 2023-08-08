@@ -2,7 +2,7 @@
     "name": "textualization/ropherta-tokenizer",
     "description": "GPT3Tokenizer (BPE) with Roberta-base vocabulary.",
     "type": "library",
-    "license": "Apache License 2.0",
+    "license": "Apache-2.0",
     "autoload": {
         "psr-4": {
             "Textualization\\Ropherta\\": "src/"
