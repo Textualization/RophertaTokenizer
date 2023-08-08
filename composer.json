@@ -3,6 +3,16 @@
     "description": "GPT3Tokenizer (BPE) with Roberta-base vocabulary.",
     "type": "library",
     "license": "Apache-2.0",
+    "support": {
+        "issues": "https://github.com/textualization/RophertaTokenizer/issues",
+        "source": "https://github.com/textualization/RophertaTokenizer"
+    },
+    "funding": [
+        {
+            "type": "ko-fi",
+            "url": "https://ko-fi.com/textualization"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Textualization\\Ropherta\\": "src/"
