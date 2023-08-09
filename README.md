@@ -4,4 +4,10 @@ This is just a wrapper around [GPT3Tokenizer](https://packagist.org/packages/gio
 
 See [GPT3 documentation](https://github.com/Gioni06/GPT3Tokenizer/blob/main/README.md) for example use (or the generated test case under `tests/`).
 
+## Sponsors
+
+We thank our sponsor:
+
+<a href="https://evoludata.com/"><img src="https://evoludata.com/display208"></a>
+
 
