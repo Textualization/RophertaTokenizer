@@ -15,7 +15,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Textualization\\Ropherta\\": "src/"
+            "Textualization\\Ropherta\\": "src/",
+            "Textualization\\Ropherta\\Tokenizer\\": "src/Tokenizer/"
         }
     },
     "autoload-dev": {
@@ -33,7 +34,8 @@
         }
     ],
     "require": {
-        "gioni06/gpt3-tokenizer": "v1.2.0"
+        "gioni06/gpt3-tokenizer": "v1.2.0",
+        "textualization/sentencepiece": "v0.0.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.8"
