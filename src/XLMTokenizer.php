@@ -65,6 +65,9 @@ class XLMTokenizer
         if (isset($this->fairseq_tokens_to_ids[$token])) {
             return $this->fairseq_tokens_to_ids[$token];
         }
+        if(is_null($this->unk_token_id)) {
+            $this->unk_token_id = $this->_convert_token_to_id($this->unk_token);
+        }
         $spm_id = $this->sp_model->PieceToId($token);
 
         return $spm_id ? $spm_id + $this->fairseq_offset : $this->unk_token_id;
@@ -88,12 +91,20 @@ class XLMTokenizer
 
     public function encode($text) : array
     {
+        if(is_null($this->unk_token_id)) {
+            $this->unk_token_id = $this->_convert_token_to_id($this->unk_token);
+        }
+        
         $max_tokens = strlen($text);
         if(! $max_tokens)
             $max_tokens = 2;
         $token_ids = $this->sp_model->Encode($text, $max_tokens);
         for($idx = 0; $idx<count($token_ids); $idx++) {
-            $token_ids[$idx] += $this->fairseq_offset;
+            if($token_ids[$idx]) {
+                $token_ids[$idx] += $this->fairseq_offset;
+            }else{
+                $token_ids[$idx] = $this->unk_token_id;
+            }
         }
         return $this->build_inputs_with_special_tokens($token_ids);
     }

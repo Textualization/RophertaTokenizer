@@ -26,6 +26,41 @@ class XLMTokenizerTest extends TestCase {
 
     }
 
+    public function test_multingual_lines() : void
+    {
+
+        $tokens = $this->tokenizer->encode('query: how much protein should a female eat');
+
+        $this->assertEquals([0,41,1294,12,3642,5045,21308,5608,10,117776,73203,2], $tokens);
+        $this->assertEquals(12, count($tokens));
+
+        $tokens = $this->tokenizer->encode('query: 南瓜的家常做法');
+
+        $this->assertEquals([0,41,1294,12,6,4617,39613,43,1433,6856,115371,2], $tokens);
+        $this->assertEquals(12, count($tokens));
+
+        $tokens = $this->tokenizer->encode('passage: As a general guideline, the CDC\'s average requirement of protein for women ages 19 to 70 is 46 grams per day. But, as you can see from this chart, you\'ll need to increase that if you\'re expecting or training for a marathon. Check out the chart below to see how much protein you should be eating each day.');
+
+        $this->assertEquals([0,46692,12,1301,10,4537,17997,2256,4,70,7915,441,25,7,83080,64209,674,111,21308,100,24793,10,4188,953,47,2358,83,7621,16190,7,117,5155,5,4966,4,237,398,831,1957,1295,903,116287,4,398,25,1181,3871,47,51312,450,2174,398,25,107,41206,214,707,23189,100,10,179365,5,38679,1810,70,116287,35064,47,1957,3642,5045,21308,398,5608,186,118992,12638,5155,5,2], $tokens);
+        $this->assertEquals(80, count($tokens));
+
+        $tokens = $this->tokenizer->encode('passage: 1.清炒南瓜丝 原料:嫩南瓜半个 调料:葱、盐、白糖、鸡精 做法: 1、南瓜用刀薄薄的削去表面一层皮,用勺子刮去瓤 2、擦成细丝(没有擦菜板就用刀慢慢切成细丝) 3、锅烧热放油,入葱花煸出香味 4、入南瓜丝快速翻炒一分钟左右,放盐、一点白糖和鸡精调味出锅 2.香葱炒南瓜 原料:南瓜1只 调料:香葱、蒜末、橄榄油、盐 做法: 1、将南瓜去皮,切成片 2、油锅8成热后,将蒜末放入爆香 3、爆香后,将南瓜片放入,翻炒 4、在翻炒的同时,可以不时地往锅里加水,但不要太多 5、放入盐,炒匀 6、南瓜差不多软和绵了之后,就可以关火 7、撒入香葱,即可出锅');
+
+        $this->assertEquals([0,46692,12,615,7318,54107,4617,39613,59580,6,105336,12,88232,4617,39613,6193,3294,6,17619,8794,12,243853,37,152890,37,3515,25407,37,60793,8539,6,115371,12,74559,4617,39613,1173,27322,27080,27080,43,101523,1677,51655,191224,10103,4,1173,244307,1344,146698,1677,3,82258,67903,2803,36332,59580,132,3029,67903,10569,10930,887,1173,27322,34159,7847,2803,36332,59580,16,101216,138300,82264,11802,5853,6858,4,2283,243853,2603,248002,1040,184005,201,37,2283,4617,39613,59580,16390,21233,54107,684,22801,15369,4,5853,152890,37,18318,3515,25407,264,60793,8539,17619,7835,1040,138300,787,8849,243853,54107,4617,39613,6,105336,12,4617,39613,418,5344,6,17619,8794,12,8849,243853,37,169622,27415,37,249924,244053,6858,37,152890,6,115371,12,74559,1726,4617,39613,1677,10103,4,7847,2803,5143,82258,6858,138300,1019,2803,11802,1826,4,1726,169622,27415,153207,20265,8849,101216,20265,8849,1826,4,1726,4617,39613,5143,153207,4,21233,54107,201,37,213,21233,54107,62736,4,1441,562,1898,955,7818,138300,2008,3490,1553,4,1273,7402,30583,190,37,153207,152890,4,54107,244285,305,37,4617,39613,86579,60772,264,202992,274,8856,4,20297,15900,5505,361,37,79007,2283,8849,243853,4,30060,1040,138300,2], $tokens);
+        $this->assertEquals(231, count($tokens));
+
+        $tokens = $this->tokenizer->encode('query: órden social y su relación con los derechos de las personas');
+
+        $this->assertEquals([0,41,1294,12,6,6997,555,2265,113,166,20398,158,388,54347,8,576,6968,2], $tokens);
+        $this->assertEquals(18, count($tokens));
+
+        $tokens = $this->tokenizer->encode('passage: Je veux chercher si dans l’ordre civil il peut y avoir quelque regle d’administration légitime & sûre, en prenant les hommes tels qu’ils sont, & les loix telles qu’elles peuvent être : Je tâcherai d’allier toujours dans cette recherche ce que le droit permet avec ce que l’intérêt prescrit, afin que la justice & l’utilité ne se trouvent point divisées.');
+
+        $this->assertEquals([0,46692,12,845,54226,135000,78,807,96,26,59548,9782,211,4372,113,12036,38944,6835,133,104,26,137858,121942,6032,619,33518,13,4,22,6,113207,199,74949,8131,7,1103,26,7870,2045,4,619,199,459,4084,101494,7,1103,26,16684,22270,4385,152,845,162268,8287,104,26,65844,56,11259,807,3393,22938,405,41,95,29582,10747,1609,405,41,96,26,61640,231061,4,17770,41,21,87338,619,96,26,87738,2312,108,40,24215,660,6275,45,1824,8493,5,2], $tokens);
+        $this->assertEquals(95, count($tokens));
+
+    }
+
     public function test_long_text_lines() : void
     {
 

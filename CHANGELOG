@@ -1,3 +1,10 @@
+ropherta-tokenizer (0.0.4)
+
+	* Extended multilingual test and bugfixes
+
+-- Pablo Duboue, 2023/02/12
+
+
 ropherta-tokenizer (0.0.3)
 
 	* Added XLM multilingual tokenizer
