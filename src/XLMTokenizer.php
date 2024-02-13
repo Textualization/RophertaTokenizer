@@ -89,6 +89,11 @@ class XLMTokenizer
         return count($this->sp_model) + $this->fairseq_offset + 1;
     }
 
+    public function count($text) : int
+    {
+        return count($this->encode($text));
+    }
+
     public function encode($text) : array
     {
         if(is_null($this->unk_token_id)) {
