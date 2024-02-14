@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "910d9e4c8379b3b462cd56c2650a87a1",
+    "content-hash": "802c3a18353ea84dcf6ffcad4eabf079",
     "packages": [
         {
             "name": "gioni06/gpt3-tokenizer",
@@ -61,16 +61,16 @@
         },
         {
             "name": "textualization/sentencepiece",
-            "version": "v0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Textualization/php-sentencepiece.git",
-                "reference": "81f7fe3cf384c8a2c7c8f3d6f6c761741dfc0a8f"
+                "reference": "a79b862a2c80c5f6cf9f36e2390d8b3fdceb8ee4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Textualization/php-sentencepiece/zipball/81f7fe3cf384c8a2c7c8f3d6f6c761741dfc0a8f",
-                "reference": "81f7fe3cf384c8a2c7c8f3d6f6c761741dfc0a8f",
+                "url": "https://api.github.com/repos/Textualization/php-sentencepiece/zipball/a79b862a2c80c5f6cf9f36e2390d8b3fdceb8ee4",
+                "reference": "a79b862a2c80c5f6cf9f36e2390d8b3fdceb8ee4",
                 "shasum": ""
             },
             "require-dev": {
@@ -103,7 +103,7 @@
                     "type": "ko-fi"
                 }
             ],
-            "time": "2024-02-12T15:07:56+00:00"
+            "time": "2024-02-14T16:01:50+00:00"
         }
     ],
     "packages-dev": [
