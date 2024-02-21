@@ -94,13 +94,50 @@ class XLMTokenizer
         return count($this->encode($text));
     }
 
+    public function split($text) : array
+    {
+        $len = mb_strlen($text);
+        $whitespace = [ " " => 1, "\r" => 1]; //, "\r" => 1, "\t" => 1, "\n" => 1]; // \n\r not compatible with python
+        $result = [];
+        while($len > 512) {
+            $idx = 511;
+            while($idx > 0 && 
+                  !isset($whitespace[mb_substr($text, $idx, 1)]))
+                  //! ctype_space(mb_substr($text, $idx, 1)))
+                --$idx;
+            if($idx<=0){
+                $idx = 512; // break tokens
+                //TODO: search for punctuation
+            }
+            $segment = mb_substr($text, 0, $idx);
+            $text = mb_substr($text, $idx, $len-$idx);
+            $len -= $idx;
+            $result[] = $segment;
+        }
+        if($len > 0){
+            $result[] = $text;
+        }
+        return $result;
+    }
+
     public function encode($text) : array
+    {
+        $segments = $this->split($text);
+        $result = [];        
+        foreach ($segments as $segment) {
+            $one = $this->encode_one($segment);
+            $result = [ ...$result, ...$one ];
+        }
+        return $this->build_inputs_with_special_tokens($result);
+    }
+
+    protected function encode_one($text) : array
     {
         if(is_null($this->unk_token_id)) {
             $this->unk_token_id = $this->_convert_token_to_id($this->unk_token);
         }
         
-        $max_tokens = strlen($text);
+        $max_tokens = mb_strlen($text);
         if(! $max_tokens)
             $max_tokens = 2;
         $token_ids = $this->sp_model->Encode($text, $max_tokens);
@@ -111,6 +148,6 @@ class XLMTokenizer
                 $token_ids[$idx] = $this->unk_token_id;
             }
         }
-        return $this->build_inputs_with_special_tokens($token_ids);
+        return $token_ids; 
     }
 }

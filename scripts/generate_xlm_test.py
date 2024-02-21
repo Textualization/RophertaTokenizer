@@ -2,6 +2,33 @@ from transformers import AutoTokenizer
 
 xlm_roberta_tokenizer = AutoTokenizer.from_pretrained("intfloat/multilingual-e5-small")
 
+def tokenize(text):
+    WHITESPACE = set([' ', '\t']) #'\r', '\t', '\n'])
+    length = len(text)
+    result = []
+    while len(text) > 512:
+        idx = 511
+        while idx > 0 and text[idx] not in WHITESPACE: ##not text[idx].isspace():
+            idx -= 1
+        if idx <= 0:
+            idx = 512
+        segment = text[0:idx]
+        text = text[idx:]
+        token_ids = xlm_roberta_tokenizer(segment, return_tensors="np")["input_ids"][0]
+        if len(result) == 0:
+            result.append(token_ids[0])
+        result.extend(token_ids[1:-1])
+        if len(text) == 0:
+            result.append(token_ids[-1])
+
+    if len(text) > 0:
+        token_ids = xlm_roberta_tokenizer(text, return_tensors="np")["input_ids"][0]
+        if len(result) == 0:
+            result.append(token_ids[0])
+        result.extend(token_ids[1:])
+
+    return result
+
 input_texts = [
     'query: how much protein should a female eat',
     'query: 南瓜的家常做法',
@@ -37,10 +64,10 @@ class XLMTokenizerTest extends TestCase {
     public function test_long_text() : void
     {
         $longText = file_get_contents(__DIR__ . '/../vendor/gioni06/gpt3-tokenizer/tests/__fixtures__/long_text.txt');
-        $tokens = $this->tokenizer->encode(substr($longText, 0, 512));
+        $tokens = $this->tokenizer->encode($longText);
 """)
     long_text = f.read()
-    tokens = xlm_roberta_tokenizer(long_text[:512], return_tensors="np")["input_ids"][0]
+    tokens = tokenize(long_text)
     t.write("""
         $this->assertEquals({}, count($tokens));
 """.format(len(tokens)))
@@ -57,11 +84,11 @@ class XLMTokenizerTest extends TestCase {
         t.write("""
         $tokens = $this->tokenizer->encode('{}');
 """.format(line.replace("'", "\\'")))
-        tokens = xlm_roberta_tokenizer(line, return_tensors="np")["input_ids"][0]
+        tokens = tokenize(line)
         t.write("""
-        $this->assertEquals([{}], $tokens);
         $this->assertEquals({}, count($tokens));
-""".format(",".join(map(str,tokens)),len(tokens)))
+        $this->assertEquals([{}], $tokens);
+""".format(len(tokens),",".join(map(str,tokens))))
     t.write("""
     }
 
@@ -70,14 +97,16 @@ class XLMTokenizerTest extends TestCase {
 """)
     lines = long_text.split("\n")
     for line in lines:
+        if not line:
+            continue
         t.write("""
         $tokens = $this->tokenizer->encode('{}');
 """.format(line.replace("'", "\\'")))
-        tokens = xlm_roberta_tokenizer(line, return_tensors="np")["input_ids"][0]
+        tokens = tokenize(line)
         t.write("""
-        $this->assertEquals([{}], $tokens);
         $this->assertEquals({}, count($tokens));
-""".format(",".join(map(str,tokens)),len(tokens)))
+        $this->assertEquals([{}], $tokens);
+""".format(len(tokens),",".join(map(str,tokens))))
     t.write("""
     }
     

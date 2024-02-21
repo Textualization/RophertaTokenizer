@@ -1,3 +1,10 @@
+ropherta-tokenizer (0.0.7)
+
+	* Lifted 512 tokens limitation for XLMTokenizer
+
+-- Pablo Duboue, 2024/02/20
+
+
 ropherta-tokenizer (0.0.6)
 
 	* New sentencepiece version
